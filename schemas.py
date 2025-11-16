@@ -13,6 +13,7 @@ Model name is converted to lowercase for the collection name:
 
 from pydantic import BaseModel, Field
 from typing import Optional
+from datetime import date
 
 # Example schemas (replace with your own):
 
@@ -37,6 +38,18 @@ class Product(BaseModel):
     price: float = Field(..., ge=0, description="Price in dollars")
     category: str = Field(..., description="Product category")
     in_stock: bool = Field(True, description="Whether product is in stock")
+
+# Hotel booking schema used by the booking endpoint
+class Booking(BaseModel):
+    check_in: date = Field(..., description="Check-in date (YYYY-MM-DD)")
+    check_out: date = Field(..., description="Check-out date (YYYY-MM-DD)")
+    adults: int = Field(..., ge=1, le=10, description="Number of adults")
+    children: int = Field(0, ge=0, le=10, description="Number of children")
+    room_type: str = Field(..., description="Selected room type")
+    full_name: Optional[str] = Field(None, description="Guest full name")
+    email: Optional[str] = Field(None, description="Guest email")
+    phone: Optional[str] = Field(None, description="Guest phone")
+    notes: Optional[str] = Field(None, description="Special requests or notes")
 
 # Add your own schemas here:
 # --------------------------------------------------
